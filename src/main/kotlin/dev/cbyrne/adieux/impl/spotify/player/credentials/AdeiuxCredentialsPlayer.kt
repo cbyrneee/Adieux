@@ -10,8 +10,20 @@ import java.io.File
 class AdeiuxCredentialsPlayer(
     private val credentials: AdeiuxCredentialsType,
 ) : AdeiuxSpotifyPlayer() {
+    private var session: Session? = null
+
     override fun connect(deviceName: String, deviceType: Connect.DeviceType) {
-        player = Player(config, createSession(deviceName, deviceType))
+        val session = createSession(deviceName, deviceType)
+        player = Player(config, session)
+
+        this.session = session
+    }
+
+    override fun disconnect() {
+        super.disconnect()
+
+        session?.close()
+        session = null
     }
 
     private fun createSession(deviceName: String, deviceType: Connect.DeviceType): Session {

@@ -26,4 +26,8 @@ class Adieux : AdeiuxEventListener, AdeiuxDiscordEventReceiver {
     ) {
         player.connect(channelJoined.name)
     }
+
+    override fun onVoiceLeave(guild: Guild, user: Member, channelLeft: VoiceChannel) {
+        player.disconnect()
+    }
 }

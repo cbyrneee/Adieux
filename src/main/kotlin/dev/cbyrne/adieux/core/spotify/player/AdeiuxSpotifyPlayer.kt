@@ -32,7 +32,7 @@ abstract class AdeiuxSpotifyPlayer {
             field = value
         }
 
-    fun disconnect() {
+    open fun disconnect() {
         player?.close()
         player = null
     }

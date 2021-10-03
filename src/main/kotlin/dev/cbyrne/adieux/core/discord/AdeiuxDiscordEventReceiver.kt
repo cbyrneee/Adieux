@@ -6,4 +6,5 @@ import net.dv8tion.jda.api.entities.VoiceChannel
 
 interface AdeiuxDiscordEventReceiver {
     fun onVoiceJoin(guild: Guild, user: Member, channelJoined: VoiceChannel, channelLeft: VoiceChannel? = null)
+    fun onVoiceLeave(guild: Guild, user: Member, channelLeft: VoiceChannel)
 }
