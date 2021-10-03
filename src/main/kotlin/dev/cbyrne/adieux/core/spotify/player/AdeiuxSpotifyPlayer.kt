@@ -1,7 +1,7 @@
 package dev.cbyrne.adieux.core.spotify.player
 
 import com.spotify.connectstate.Connect
-import dev.cbyrne.adieux.impl.spotify.mixing.AdeiuxSinkOutput
+import dev.cbyrne.adieux.impl.spotify.mixing.AdieuxSinkOutput
 import xyz.gianlu.librespot.player.Player
 import xyz.gianlu.librespot.player.PlayerConfiguration
 
@@ -10,7 +10,7 @@ abstract class AdeiuxSpotifyPlayer {
 
     val config = PlayerConfiguration.Builder()
         .setOutput(PlayerConfiguration.AudioOutput.CUSTOM)
-        .setOutputClass(AdeiuxSinkOutput::class.java.name)
+        .setOutputClass(AdieuxSinkOutput::class.java.name)
 //        .setOutput(PlayerConfiguration.AudioOutput.MIXER)
 //        .setMixerSearchKeywords(arrayOf())
 //        .setLogAvailableMixers(true)
