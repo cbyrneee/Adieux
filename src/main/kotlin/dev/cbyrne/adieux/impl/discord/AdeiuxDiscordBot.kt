@@ -29,7 +29,7 @@ class AdeiuxDiscordBot(private val token: String) {
         val builder = JDABuilder.createDefault(token)
         builder.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
         builder.disableIntents(GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MESSAGE_TYPING)
-        builder.setActivity(Activity.listening("to music"))
+        builder.setActivity(Activity.listening("music"))
 
         return builder.build()
     }
