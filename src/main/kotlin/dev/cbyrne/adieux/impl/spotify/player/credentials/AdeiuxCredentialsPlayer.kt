@@ -1,23 +1,20 @@
 package dev.cbyrne.adieux.impl.spotify.player.credentials
 
 import com.spotify.connectstate.Connect
-import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdeiuxCredentialsType
 import dev.cbyrne.adieux.core.spotify.player.AdeiuxSpotifyPlayer
-import xyz.gianlu.librespot.ZeroconfServer
+import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdeiuxCredentialsType
 import xyz.gianlu.librespot.core.Session
 import xyz.gianlu.librespot.player.Player
 import java.io.File
 
 class AdeiuxCredentialsPlayer(
     private val credentials: AdeiuxCredentialsType,
-    deviceName: String = "Adeiux",
-    deviceType: Connect.DeviceType = Connect.DeviceType.CAST_AUDIO,
-) : AdeiuxSpotifyPlayer(deviceName, deviceType) {
-    override fun connect() {
-        player = Player(config, createSession())
+) : AdeiuxSpotifyPlayer() {
+    override fun connect(deviceName: String, deviceType: Connect.DeviceType) {
+        player = Player(config, createSession(deviceName, deviceType))
     }
 
-    private fun createSession(): Session {
+    private fun createSession(deviceName: String = "Adeiux", deviceType: Connect.DeviceType = Connect.DeviceType.CAST_AUDIO): Session {
         val sessionBuilder = Session.Builder()
             .setPreferredLocale("en")
             .setDeviceType(deviceType)

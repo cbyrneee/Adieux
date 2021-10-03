@@ -5,11 +5,8 @@ import dev.cbyrne.adieux.impl.spotify.mixing.AdeiuxSinkOutput
 import xyz.gianlu.librespot.player.Player
 import xyz.gianlu.librespot.player.PlayerConfiguration
 
-abstract class AdeiuxSpotifyPlayer(
-    protected val deviceName: String,
-    protected val deviceType: Connect.DeviceType
-) {
-    abstract fun connect()
+abstract class AdeiuxSpotifyPlayer {
+    abstract fun connect(deviceName: String = "Adeiux", deviceType: Connect.DeviceType = Connect.DeviceType.CAST_AUDIO)
 
     val config = PlayerConfiguration.Builder()
         .setOutput(PlayerConfiguration.AudioOutput.CUSTOM)

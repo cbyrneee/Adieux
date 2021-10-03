@@ -6,11 +6,8 @@ import xyz.gianlu.librespot.ZeroconfServer
 import xyz.gianlu.librespot.core.Session
 import xyz.gianlu.librespot.player.Player
 
-class AdeiuxZeroconfPlayer(
-    deviceName: String = "Adeiux",
-    deviceType: Connect.DeviceType = Connect.DeviceType.CAST_AUDIO,
-) : AdeiuxSpotifyPlayer(deviceName, deviceType) {
-    override fun connect() {
+class AdeiuxZeroconfPlayer : AdeiuxSpotifyPlayer() {
+    override fun connect(deviceName: String, deviceType: Connect.DeviceType) {
         val server = ZeroconfServer.Builder()
             .setDeviceName(deviceName)
             .setDeviceType(deviceType)
