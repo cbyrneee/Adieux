@@ -14,7 +14,7 @@ class AdeiuxCredentialsPlayer(
         player = Player(config, createSession(deviceName, deviceType))
     }
 
-    private fun createSession(deviceName: String = "Adeiux", deviceType: Connect.DeviceType = Connect.DeviceType.CAST_AUDIO): Session {
+    private fun createSession(deviceName: String, deviceType: Connect.DeviceType): Session {
         val sessionBuilder = Session.Builder()
             .setPreferredLocale("en")
             .setDeviceType(deviceType)

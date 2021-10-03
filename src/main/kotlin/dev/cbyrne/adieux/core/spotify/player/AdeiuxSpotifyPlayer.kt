@@ -6,7 +6,7 @@ import xyz.gianlu.librespot.player.Player
 import xyz.gianlu.librespot.player.PlayerConfiguration
 
 abstract class AdeiuxSpotifyPlayer {
-    abstract fun connect(deviceName: String = "Adeiux", deviceType: Connect.DeviceType = Connect.DeviceType.CAST_AUDIO)
+    abstract fun connect(deviceName: String = "Adeiux", deviceType: Connect.DeviceType = Connect.DeviceType.AUDIO_DONGLE)
 
     val config = PlayerConfiguration.Builder()
         .setOutput(PlayerConfiguration.AudioOutput.CUSTOM)
