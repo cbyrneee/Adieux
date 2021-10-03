@@ -10,10 +10,12 @@ version = "1.0.0"
 
 repositories {
     mavenCentral()
+    maven("https://m2.dv8tion.net/releases")
 }
 
 dependencies {
     implementation("xyz.gianlu.librespot:librespot-player:1.6.1:thin")
+    implementation("net.dv8tion:JDA:4.3.0_332")
 }
 
 tasks.withType<KotlinCompile>() {
