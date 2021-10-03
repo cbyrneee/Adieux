@@ -20,16 +20,23 @@ class AdieuxDiscordBot(private val token: String) {
             listener.receiver = field
         }
 
+    var activity: Activity = Activity.watching("things load")
+        set(value) {
+            jda.presence.activity = value
+            field = value
+        }
+
     fun start() {
         jda.addEventListener(listener)
         jda.awaitReady()
+
+        activity = Activity.listening("music")
     }
 
     private fun buildJDA(): JDA {
         val builder = JDABuilder.createDefault(token)
         builder.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
         builder.disableIntents(GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MESSAGE_TYPING)
-        builder.setActivity(Activity.listening("music"))
 
         return builder.build()
     }

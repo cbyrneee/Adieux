@@ -6,9 +6,12 @@ import dev.cbyrne.adieux.impl.discord.AdieuxDiscordBot
 import dev.cbyrne.adieux.impl.discord.audio.AdieuxAudioSendHandler
 import dev.cbyrne.adieux.impl.spotify.player.credentials.AdieuxCredentialsPlayer
 import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdieuxCredentialsType
+import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.VoiceChannel
+import xyz.gianlu.librespot.audio.MetadataWrapper
+import xyz.gianlu.librespot.player.Player
 
 class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
     val player = AdieuxCredentialsPlayer(AdieuxCredentialsType.Stored())
@@ -18,7 +21,9 @@ class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
 
     fun start() {
         bot.start()
+
         bot.receiver = this
+        player.listener = this
     }
 
     override fun onVoiceJoin(
@@ -42,5 +47,9 @@ class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
         val manager = guild.audioManager
         manager.sendingHandler = null
         manager.closeAudioConnection()
+    }
+
+    override fun onMetadataAvailable(player: Player, metadata: MetadataWrapper) {
+        bot.activity = Activity.listening("${metadata.name} by ${metadata.artist}")
     }
 }
