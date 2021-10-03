@@ -3,6 +3,7 @@ package dev.cbyrne.adieux
 import dev.cbyrne.adieux.core.discord.AdieuxDiscordEventReceiver
 import dev.cbyrne.adieux.core.spotify.player.AdieuxEventListener
 import dev.cbyrne.adieux.impl.discord.AdieuxDiscordBot
+import dev.cbyrne.adieux.impl.discord.audio.AdieuxAudioSendHandler
 import dev.cbyrne.adieux.impl.spotify.player.credentials.AdieuxCredentialsPlayer
 import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdieuxCredentialsType
 import net.dv8tion.jda.api.entities.Guild
@@ -28,10 +29,18 @@ class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
     ) {
         if (user.id != userIdToFollow) return
         player.connect(channelJoined.name)
+
+        val manager = guild.audioManager
+        manager.sendingHandler = AdieuxAudioSendHandler()
+        manager.openAudioConnection(channelJoined)
     }
 
     override fun onVoiceLeave(guild: Guild, user: Member, channelLeft: VoiceChannel) {
         if (user.id != userIdToFollow) return
         player.disconnect()
+
+        val manager = guild.audioManager
+        manager.sendingHandler = null
+        manager.closeAudioConnection()
     }
 }
