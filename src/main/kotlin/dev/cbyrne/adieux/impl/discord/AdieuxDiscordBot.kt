@@ -1,7 +1,7 @@
 package dev.cbyrne.adieux.impl.discord
 
-import dev.cbyrne.adieux.core.discord.AdeiuxDiscordEventReceiver
-import dev.cbyrne.adieux.impl.discord.listener.AdeiuxDiscordEventListener
+import dev.cbyrne.adieux.core.discord.AdieuxDiscordEventReceiver
+import dev.cbyrne.adieux.impl.discord.listener.AdieuxDiscordEventListener
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
@@ -9,12 +9,12 @@ import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.utils.MemberCachePolicy
 import org.apache.logging.log4j.LogManager
 
-class AdeiuxDiscordBot(private val token: String) {
+class AdieuxDiscordBot(private val token: String) {
     private val logger = LogManager.getLogger()
     private val jda = buildJDA()
-    private val listener = AdeiuxDiscordEventListener(logger)
+    private val listener = AdieuxDiscordEventListener(logger)
 
-    var receiver: AdeiuxDiscordEventReceiver? = null
+    var receiver: AdieuxDiscordEventReceiver? = null
         set(value) {
             field = value
             listener.receiver = field

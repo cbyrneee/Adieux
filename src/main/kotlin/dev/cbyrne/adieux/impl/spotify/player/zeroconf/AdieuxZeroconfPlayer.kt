@@ -1,12 +1,12 @@
 package dev.cbyrne.adieux.impl.spotify.player.zeroconf
 
 import com.spotify.connectstate.Connect
-import dev.cbyrne.adieux.core.spotify.player.AdeiuxSpotifyPlayer
+import dev.cbyrne.adieux.core.spotify.player.AdieuxSpotifyPlayer
 import xyz.gianlu.librespot.ZeroconfServer
 import xyz.gianlu.librespot.core.Session
 import xyz.gianlu.librespot.player.Player
 
-class AdeiuxZeroconfPlayer : AdeiuxSpotifyPlayer(), ZeroconfServer.SessionListener {
+class AdieuxZeroconfPlayer : AdieuxSpotifyPlayer(), ZeroconfServer.SessionListener {
     private var session: Session? = null
     private var server: ZeroconfServer? = null
         set(value) {

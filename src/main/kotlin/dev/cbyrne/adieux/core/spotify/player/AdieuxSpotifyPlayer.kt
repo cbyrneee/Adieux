@@ -5,8 +5,8 @@ import dev.cbyrne.adieux.impl.spotify.mixing.AdieuxSinkOutput
 import xyz.gianlu.librespot.player.Player
 import xyz.gianlu.librespot.player.PlayerConfiguration
 
-abstract class AdeiuxSpotifyPlayer {
-    abstract fun connect(deviceName: String = "Adeiux", deviceType: Connect.DeviceType = Connect.DeviceType.AUDIO_DONGLE)
+abstract class AdieuxSpotifyPlayer {
+    abstract fun connect(deviceName: String = "Adieux", deviceType: Connect.DeviceType = Connect.DeviceType.AUDIO_DONGLE)
 
     val config = PlayerConfiguration.Builder()
         .setOutput(PlayerConfiguration.AudioOutput.CUSTOM)
@@ -16,7 +16,7 @@ abstract class AdeiuxSpotifyPlayer {
 //        .setLogAvailableMixers(true)
         .build()
 
-    var listener: AdeiuxEventListener? = null
+    var listener: AdieuxEventListener? = null
         set(value) {
             if (value == null) return
 

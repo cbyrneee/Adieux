@@ -1,19 +1,19 @@
 package dev.cbyrne.adieux
 
-import dev.cbyrne.adieux.core.discord.AdeiuxDiscordEventReceiver
-import dev.cbyrne.adieux.core.spotify.player.AdeiuxEventListener
-import dev.cbyrne.adieux.impl.discord.AdeiuxDiscordBot
-import dev.cbyrne.adieux.impl.spotify.player.credentials.AdeiuxCredentialsPlayer
-import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdeiuxCredentialsType
+import dev.cbyrne.adieux.core.discord.AdieuxDiscordEventReceiver
+import dev.cbyrne.adieux.core.spotify.player.AdieuxEventListener
+import dev.cbyrne.adieux.impl.discord.AdieuxDiscordBot
+import dev.cbyrne.adieux.impl.spotify.player.credentials.AdieuxCredentialsPlayer
+import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdieuxCredentialsType
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.VoiceChannel
 
-class Adieux : AdeiuxEventListener, AdeiuxDiscordEventReceiver {
-    val player = AdeiuxCredentialsPlayer(AdeiuxCredentialsType.Stored())
-    val bot = AdeiuxDiscordBot(System.getenv("adeiux.token"))
+class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
+    val player = AdieuxCredentialsPlayer(AdieuxCredentialsType.Stored())
+    val bot = AdieuxDiscordBot(System.getenv("adieux.token"))
 
-    private val userIdToFollow = System.getenv("adeiux.user")
+    private val userIdToFollow = System.getenv("adieux.user")
 
     fun start() {
         bot.start()

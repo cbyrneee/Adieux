@@ -1,15 +1,15 @@
 package dev.cbyrne.adieux.impl.spotify.player.credentials
 
 import com.spotify.connectstate.Connect
-import dev.cbyrne.adieux.core.spotify.player.AdeiuxSpotifyPlayer
-import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdeiuxCredentialsType
+import dev.cbyrne.adieux.core.spotify.player.AdieuxSpotifyPlayer
+import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdieuxCredentialsType
 import xyz.gianlu.librespot.core.Session
 import xyz.gianlu.librespot.player.Player
 import java.io.File
 
-class AdeiuxCredentialsPlayer(
-    private val credentials: AdeiuxCredentialsType,
-) : AdeiuxSpotifyPlayer() {
+class AdieuxCredentialsPlayer(
+    private val credentials: AdieuxCredentialsType,
+) : AdieuxSpotifyPlayer() {
     private var session: Session? = null
 
     override fun connect(deviceName: String, deviceType: Connect.DeviceType) {
@@ -34,8 +34,8 @@ class AdeiuxCredentialsPlayer(
             .setDeviceId(null)
 
         when (credentials) {
-            is AdeiuxCredentialsType.Stored -> sessionBuilder.stored(credentials.file)
-            is AdeiuxCredentialsType.UserPass -> sessionBuilder.userPass(credentials.username, credentials.password)
+            is AdieuxCredentialsType.Stored -> sessionBuilder.stored(credentials.file)
+            is AdieuxCredentialsType.UserPass -> sessionBuilder.userPass(credentials.username, credentials.password)
         }
 
         return sessionBuilder.create()

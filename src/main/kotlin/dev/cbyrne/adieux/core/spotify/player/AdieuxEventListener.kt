@@ -4,7 +4,7 @@ import xyz.gianlu.librespot.audio.MetadataWrapper
 import xyz.gianlu.librespot.metadata.PlayableId
 import xyz.gianlu.librespot.player.Player
 
-interface AdeiuxEventListener : Player.EventsListener {
+interface AdieuxEventListener : Player.EventsListener {
     override fun onContextChanged(player: Player, newUri: String) {
     }
 
