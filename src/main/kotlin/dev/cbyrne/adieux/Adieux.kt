@@ -13,6 +13,8 @@ class Adieux : AdeiuxEventListener, AdeiuxDiscordEventReceiver {
     val player = AdeiuxCredentialsPlayer(AdeiuxCredentialsType.Stored())
     val bot = AdeiuxDiscordBot(System.getenv("adeiux.token"))
 
+    private val userIdToFollow = System.getenv("adeiux.user")
+
     fun start() {
         bot.start()
         bot.receiver = this
@@ -24,10 +26,12 @@ class Adieux : AdeiuxEventListener, AdeiuxDiscordEventReceiver {
         channelJoined: VoiceChannel,
         channelLeft: VoiceChannel?
     ) {
+        if (user.id != userIdToFollow) return
         player.connect(channelJoined.name)
     }
 
     override fun onVoiceLeave(guild: Guild, user: Member, channelLeft: VoiceChannel) {
+        if (user.id != userIdToFollow) return
         player.disconnect()
     }
 }
