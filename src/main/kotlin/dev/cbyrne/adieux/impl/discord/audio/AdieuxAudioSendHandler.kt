@@ -5,15 +5,7 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 
 class AdieuxAudioSendHandler : AudioSendHandler {
-    companion object {
-        var outputStream = ByteArrayOutputStream(4096)
-    }
-
     override fun canProvide() = false
-
-    override fun provide20MsAudio(): ByteBuffer? {
-        return ByteBuffer.wrap(outputStream.toByteArray())
-    }
-
+    override fun provide20MsAudio(): ByteBuffer? = null
     override fun isOpus() = false
 }
