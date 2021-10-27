@@ -6,12 +6,14 @@ import dev.cbyrne.adieux.impl.discord.AdieuxDiscordBot
 import dev.cbyrne.adieux.impl.discord.audio.AdieuxAudioSendHandler
 import dev.cbyrne.adieux.impl.spotify.player.credentials.AdieuxCredentialsPlayer
 import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdieuxCredentialsType
+import kotlinx.coroutines.runBlocking
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.VoiceChannel
 import xyz.gianlu.librespot.audio.MetadataWrapper
 import xyz.gianlu.librespot.player.Player
+import java.io.File
 
 class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
     val player = AdieuxCredentialsPlayer(AdieuxCredentialsType.Stored())
@@ -36,12 +38,25 @@ class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
         player.connect(channelJoined.name)
 
         val manager = guild.audioManager
-        manager.sendingHandler = AdieuxAudioSendHandler()
+        manager.sendingHandler = AdieuxAudioSendHandler(player.mixingManager.storageGetter)
         manager.openAudioConnection(channelJoined)
     }
 
     override fun onVoiceLeave(guild: Guild, user: Member, channelLeft: VoiceChannel) {
         if (user.id != userIdToFollow) return
+
+        // debug dump
+        runBlocking {
+            try {
+                player.mixingManager.audioProcessor.dumper?.apply {
+                    dump(File("dump.wav"), false)
+                    flush()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         player.disconnect()
 
         val manager = guild.audioManager
