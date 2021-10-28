@@ -16,9 +16,10 @@ repositories {
 dependencies {
     implementation("xyz.gianlu.librespot:librespot-player:1.6.1:thin")
     implementation("net.dv8tion:JDA:4.3.0_332")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 }
 
-tasks.withType<KotlinCompile>() {
+tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 

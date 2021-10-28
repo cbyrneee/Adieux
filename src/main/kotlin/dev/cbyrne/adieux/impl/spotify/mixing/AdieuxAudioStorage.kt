@@ -12,6 +12,7 @@ import javax.sound.sampled.AudioFormat
 /**
  * Takes audio data and slices it to Discord-friendly slices (20 ms of audio)
  * Audio format is not converted.
+ * @author UserTeemu
  */
 class AdieuxAudioStorage(private val format: AudioFormat = AudioSendHandler.INPUT_FORMAT) {
     /**
@@ -35,7 +36,6 @@ class AdieuxAudioStorage(private val format: AudioFormat = AudioSendHandler.INPU
      * @see chunks
      */
     private val mutex = Mutex()
-
 
     suspend fun write(array: ByteArray) {
         var bytes = array
@@ -65,11 +65,10 @@ class AdieuxAudioStorage(private val format: AudioFormat = AudioSendHandler.INPU
         }
     }
 
-
     fun anyFullChunks(): Boolean =
         runBlocking {
             mutex.withLock {
-                chunks.any { it.position() > 0 }
+                chunks.any { it.remaining() == 0 }
             }
         }
 
@@ -86,5 +85,4 @@ class AdieuxAudioStorage(private val format: AudioFormat = AudioSendHandler.INPU
                 chunks.clear()
             }
         }
-
 }

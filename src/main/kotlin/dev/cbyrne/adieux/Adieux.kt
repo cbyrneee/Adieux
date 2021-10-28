@@ -6,6 +6,7 @@ import dev.cbyrne.adieux.impl.discord.AdieuxDiscordBot
 import dev.cbyrne.adieux.impl.discord.audio.AdieuxAudioSendHandler
 import dev.cbyrne.adieux.impl.spotify.player.credentials.AdieuxCredentialsPlayer
 import dev.cbyrne.adieux.impl.spotify.player.credentials.type.AdieuxCredentialsType
+import dev.cbyrne.adieux.util.AudioDumper
 import kotlinx.coroutines.runBlocking
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.entities.Guild
@@ -45,15 +46,32 @@ class Adieux : AdieuxEventListener, AdieuxDiscordEventReceiver {
     override fun onVoiceLeave(guild: Guild, user: Member, channelLeft: VoiceChannel) {
         if (user.id != userIdToFollow) return
 
-        // debug dump
-        runBlocking {
-            try {
-                player.mixingManager.audioProcessor.dumper?.apply {
-                    dump(File("dump.wav"), false)
-                    flush()
+        if (AudioDumper.isDumpEnabled) {
+            // debug dump
+            runBlocking {
+                try {
+                    player.mixingManager.audioProcessor.inputDumper?.apply {
+                        try {
+                            dump(file = File("input-dump.wav"))
+                        } finally {
+                            flush()
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+
+                try {
+                    player.mixingManager.audioProcessor.outputDumper?.apply {
+                        try {
+                            dump(file = File("output-dump.aiff"))
+                        } finally {
+                            flush()
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
 

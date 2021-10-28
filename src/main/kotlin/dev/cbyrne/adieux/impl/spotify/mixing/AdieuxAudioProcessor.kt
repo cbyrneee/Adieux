@@ -3,11 +3,11 @@ package dev.cbyrne.adieux.impl.spotify.mixing
 import dev.cbyrne.adieux.util.AudioDumper
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import javax.sound.sampled.AudioFileFormat
 import javax.sound.sampled.AudioFormat
 
 /**
  * Processes and saves audio data obtained through a channel
+ * @author UserTeemu
  */
 class AdieuxAudioProcessor(private val channel: Channel<ByteArray>, inputAudioFormat: AudioFormat, outputAudioFormat: AudioFormat) {
     /**
@@ -20,12 +20,18 @@ class AdieuxAudioProcessor(private val channel: Channel<ByteArray>, inputAudioFo
      */
     internal val storage = AdieuxAudioStorage(outputAudioFormat)
 
+
     /**
      * Used for debugging audio data.
      * If you don't wish to dump the data, set this to null.
      */
-    @Suppress("RedundantNullableReturnType")
-    val dumper: AudioDumper? = AudioDumper(outputAudioFormat, AudioFileFormat.Type.AIFF)
+    val inputDumper: AudioDumper? = if (AudioDumper.dumpMode.inputEnabled) AudioDumper(inputAudioFormat) else null
+
+    /**
+     * Used for debugging audio data.
+     * If you don't wish to dump the data, set this to null.
+     */
+    val outputDumper: AudioDumper? = if (AudioDumper.dumpMode.outputEnabled) AudioDumper(outputAudioFormat) else null
 
     /**
      * Coroutine scope, in which the processing is done
@@ -46,11 +52,10 @@ class AdieuxAudioProcessor(private val channel: Channel<ByteArray>, inputAudioFo
     }
 
     private suspend fun process(byteArray: ByteArray) {
-        val converted = converter.convert(byteArray)
-
-        dumper?.add(converted)
-
-        storage.write(converted)
+        inputDumper?.add(byteArray) // dump input, if dumper has been made
+        val converted = converter.convert(byteArray) // convert
+        storage.write(converted) // store output in storage
+        outputDumper?.add(converted) // dump output, if dumper has been made
     }
 
     fun flush() {
