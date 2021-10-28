@@ -9,13 +9,14 @@ import javax.sound.sampled.AudioSystem
 
 /**
  * Handles audio format conversions.
+ * @author UserTeemu
  */
 class AdieuxAudioConverter(private val inputFormat: AudioFormat, private val outputFormat: AudioFormat) {
     private val logger = LogManager.getLogger()
 
     init {
         require(AudioSystem.isConversionSupported(inputFormat, outputFormat)) {
-            "Trying to convert '$inputFormat' to '$outputFormat' is not supported!"
+            "Converting from '$inputFormat' to '$outputFormat' is not supported"
         }
     }
 
@@ -30,8 +31,7 @@ class AdieuxAudioConverter(private val inputFormat: AudioFormat, private val out
             return inputBytes
         }
 
-        val zeroByte: Byte = 0
-        println("Queue is full of zeroes: ${inputBytes.all { it == zeroByte }}")
+        logger.debug(if (inputBytes.all { it == 0.toByte() }) "Queue is full of zeroes" else "Queue is not full of zeroes")
 
         val inputStream = AudioInputStream(ByteArrayInputStream(inputBytes), inputFormat, inputBytes.size.toLong())
         val converted = AudioSystem.getAudioInputStream(outputFormat, inputStream)

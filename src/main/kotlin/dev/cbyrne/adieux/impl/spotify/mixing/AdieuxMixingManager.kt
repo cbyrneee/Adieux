@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioFormat
 
 /**
  * Decides what format, channel and processor are used.
+ * @author UserTeemu
  */
 class AdieuxMixingManager {
     val audioChannel = Channel<ByteArray>(Channel.UNLIMITED)
@@ -22,10 +23,7 @@ class AdieuxMixingManager {
     }
 
     val storageGetter: () -> AdieuxAudioStorage? = {
-        try {
-            audioProcessor.storage
-        } catch (e: Throwable) {
-            null
-        }
+        // We catch a possible throwable for safety. A throwable might be thrown for example when the audio processor is being replaced.
+        runCatching { audioProcessor.storage }.getOrNull()
     }
 }
